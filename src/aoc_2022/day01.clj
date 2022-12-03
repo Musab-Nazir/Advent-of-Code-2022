@@ -11,4 +11,4 @@
                             (conj acc (reduce + elf-calories-int)))) [] elf-groups-str))
 
 (apply max elf-totals)
-
+(apply + (take-last 3 (sort elf-totals)))
