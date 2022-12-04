@@ -16,6 +16,20 @@
                    "Y" :draw
                    "Z" :win})
 
+(defn get-player-input
+  [op outcome]
+  (cond
+    ;tie so return same as opponent
+    (= outcome :draw) op
+
+    (and (= outcome :lose) (= op :scissors)) :paper
+    (and (= outcome :lose) (= op :rock)) :scissors
+    (and (= outcome :lose) (= op :paper)) :rock
+
+    (and (= outcome :win) (= op :scissors)) :rock
+    (and (= outcome :win) (= op :rock)) :paper
+    (and (= outcome :win) (= op :paper)) :scissors))
+
 (def shape-score {:rock 1
                   :paper 2
                   :scissors 3})
@@ -47,7 +61,7 @@
   [round-str]
   (let [[opponent player] (str/split round-str #" ")
         op (get opponent-key opponent)
-        pl (get player-key player)]
+        pl (get-player-input op (get player-key-2 player))]
     (+ (shape-score pl) (get-round-score op pl))))
 
-(def total-score (reduce + (mapv get-total-round-score input)))
+(def total-score (reduce + (mapv get-total-round-score-2 input)))
